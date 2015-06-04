@@ -1,0 +1,217 @@
+#!/bin/sh
+
+# Copyright (c) 2015 Susam Pal
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+#   1. Redistributions of source code must retain the above copyright
+#      notice, this list of conditions and the following disclaimer.
+#   2. Redistributions in binary form must reproduce the above copyright
+#      notice, this list of conditions and the following disclaimer in
+#      the documentation and/or other materials provided with the
+#      distribution.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+
+VERSION=0.1.0
+
+CHANGELOG="
+0.1.0 (2015-06-05)
+-----------------
+  - NEW: Send text or commands in file to WeeChat.
+"
+
+COPYRIGHT="Copyright (c) 2015 Susam Pal"
+
+NOTICE="
+This is free software. You are permitted to redistribute and use it in
+source and binary forms, with or without modification, under the terms
+of the Simplified BSD License. See <http://susam.in/licenses/bsd/> for
+the complete license."
+
+NAME=${0##*/}
+
+
+# Starting point of this script.
+#
+# Arguments:
+#   "$@" -- All command line arguments specified while invoking this
+#           script must be passed to this function.
+main()
+{
+    parse_arguments "$@"
+
+    # Find FIFO pipe.
+    for f in ~/.weechat/weechat_fifo_*
+    do
+        if [ "$f" != ~/.weechat/weechat_fifo_"*" ]
+        then
+            fifo="$f"
+            break
+        fi
+    done
+
+    if [ -z "$fifo" ]
+    then
+        quit Could not find Weechat FIFO pipe.
+    fi
+
+    debug_output FIFO: "$fifo"
+
+    # Read from standard input if input file is not specified.
+    if [ -z "$input_file" ]
+    then
+        input_file=-
+    fi
+
+    # Skip comments and lines consisting only of whitespaces and feed
+    # the remaining lines to WeeChat's FIFO.
+    grep -v "^[[:space:]]*#" "$input_file" | grep "[[:graph:]]" |
+    while read -r line
+    do
+        debug_output READ: "$line"
+
+        line="*$line"
+        if [ -n "$buffer" ]
+        then
+            line="$buffer $line"
+        fi
+        printf "%s\n" "$line" > "$fifo"
+
+        debug_output SENT: "$line"
+    done
+}
+
+# Parse command line arguments passed to this script.
+#
+# Arguments:
+#   "$@" -- All command line arguments specified while invoking this
+#           script must be passed to this function.
+#
+# Errors:
+#   If invalid arguments are specified, this function causes the script
+#   to exit with an error.
+parse_arguments()
+{
+    while [ "$#" -gt 0 ]
+    do
+        case $1 in
+            -b | --buffer)
+                [ -n "$2" ] || quit \""$1"\" must be followed by buffer name.
+                buffer="$2"
+                shift 2
+                ;;
+            -d | --debug)
+                debug=yes
+                shift
+                ;;
+            -c | --changelog)
+                show_changelog
+                exit
+                ;;
+            -h | --help)
+                show_help
+                exit
+                ;;
+            -v | --version)
+                show_version
+                exit
+                ;;
+            -?*)
+                quit Unknown option \""$1"\".
+                ;;
+            *)
+                if [ -z "$input_file" ]
+                then
+                    input_file="$1"
+                    shift
+                else
+                    quit Surplus argument \""$1"\".
+                fi
+        esac
+    done
+}
+
+
+# Output message only in debug mode.
+#
+# Arguments:
+#   string... -- String to print to standard output stream.
+debug_output()
+{
+    if [ "$debug" = "yes" ]
+    then
+        printf "%s\n" "$*"
+    fi
+}
+
+
+# Terminate the script with an error message.
+#
+# Arguments:
+#   string... -- String to print to standard error stream.
+#
+# Errors:
+#   Unconditionally causs the script to terminate with an error message
+#   and exit code 1.
+quit()
+{
+    printf "%s: %s\n" "$NAME" "$*" >&2
+    exit 1
+}
+
+
+# Show help.
+show_help()
+{
+    printf "%s\n" \
+"Usage: $NAME [-b BUFFER] [-d] [-c] [-h] [-v] [FILE]
+
+Read text or commands from standard input, FILE or from the output of a
+shell command, and send it to WeeChat's FIFO pipe. If FILE is not
+specified or if it is specified as '-', i.e. a hyphen, then text and
+commands are read from standard input.
+
+Options:
+  -b, --buffer BUFFER  Buffer to send text or command to.
+  -d, --debug          Show diagnostic information.
+  -c, --changelog      Show changelog and exit.
+  -h, --help           Show this help and exit.
+  -v, --version        Show version and exit.
+
+Report bugs to <https://github.com/susam/inwee/issues>"
+}
+
+
+# Show version and copyright.
+show_version()
+{
+    printf "%s %s\n%s\n%s\n" "$NAME" "$VERSION" "$COPYRIGHT" "$NOTICE"
+}
+
+
+# Show changelog.
+show_changelog()
+{
+    echo Changelog
+    echo =========
+    printf %s "$CHANGELOG"
+}
+
+
+# Start
+main "$@"
