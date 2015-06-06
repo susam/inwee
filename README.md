@@ -277,7 +277,7 @@ done with InWee can also be done without it.
 
      Without InWee: 
 
-        sed 's/^/*/' settings.txt > ~/.weechat/weechat_fifo_*
+        sed 's/^/*/' input.txt > ~/.weechat/weechat_fifo_*
 
   6. Send the output of a simple shell command in WeeChat to a channel.
 
