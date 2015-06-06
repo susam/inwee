@@ -6,6 +6,21 @@ WeeChat from shell or from within WeeChat via WeeChat's [FIFO pipe][1].
 [1]: http://www.weechat.org/files/doc/stable/weechat_user.en.html#fifo_plugin
 
 
+Contents
+--------
+  * [Necessity](#necessity)
+  * [Installation](#installation)
+    * [Manual](#manual)
+    * [With wget](#with-wget)
+    * [With git](#with-git)
+  * [Getting Started](#getting-started)
+    * [Using from shell](#using-from-shell)
+    * [Using from WeeChat](#using-from-weechat)
+  * [Without InWee](#without-inwee)
+  * [License](#license)
+  * [Contact](#contact)
+
+
 Necessity
 ---------
 WeeChat keeps configuration in several .conf files in ~/.weechat
@@ -83,7 +98,7 @@ Here are the steps to manually download the script and install it.
   3. Unzip the downloaded file and copy the file named `inwee` into a
      directory in the `PATH` variable, e.g. /usr/local/bin or ~/bin.
 
-### Using wget ###
+### With wget ###
 Here are the shell commands to automatically download the script and
 install it.
 
@@ -92,7 +107,7 @@ install it.
     mkdir ~/bin
     cp inwee-master/inwee ~/bin
 
-### Using git ###
+### With git ###
 If `git` is available, then the script may be obtained by cloning this
 project.
 
