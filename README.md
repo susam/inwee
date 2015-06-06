@@ -1,7 +1,7 @@
 InWee
 =====
-InWee is a convenience script to send text messages and commands to
-WeeChat from shell or from within WeeChat via WeeChat's [FIFO pipe][1].
+InWee is a convenience tool to send text messages and commands to
+WeeChat from shell or from within WeeChat via [WeeChat's FIFO pipe][1].
 
 [1]: http://www.weechat.org/files/doc/stable/weechat_user.en.html#fifo_plugin
 
