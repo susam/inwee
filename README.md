@@ -218,7 +218,7 @@ inside WeeChat directly.
 Without InWee
 -------------
 Everything that can be done with InWee can be done without it, although
-it can be a little clumsy for same cases. This section is written for
+it can be a little clumsy for some cases. This section is written for
 those who do not want to use InWee but do what can be done with InWee by
 working directly with WeeChat's FIFO pipe or WeeChat's `/exec` command.
 WeeChat's FIFO pipe is located at ~/.weechat by default and named as
