@@ -337,13 +337,15 @@ done with InWee can also be done without it.
 
 License
 -------
-This is free software. You are permitted to redistribute and use it in
-source and binary forms, with or without modification, under the terms
-of the Simplified BSD License. See LICENSE.md for the complete license.
+This is free software. You are permitted to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of it, under the
+terms of the MIT License. See [LICENSE.md][1] for the complete license.
 
 This software is provided WITHOUT ANY WARRANTY; without even the implied
-warranties of MERCHANTABILITY and FITNESS FOR A PARTICULAR PURPOSE. See
-LICENSE.md for the complete disclaimer.
+warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
+[LICENSE.md][1] for the complete disclaimer.
+
+[1]: LICENSE.md
 
 
 Contact
