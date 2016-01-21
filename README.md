@@ -1,9 +1,14 @@
 InWee
 =====
-InWee is a convenience tool to send text messages and commands to
-WeeChat from shell or from within WeeChat via [WeeChat's FIFO pipe][1].
+InWee is a convenience wrapper script to send text messages and commands
+to WeeChat from shell or from within WeeChat via
+[WeeChat's FIFO pipe][1].
+
+[![Download][SHIELD]][DOWNLOAD]
 
 [1]: http://www.weechat.org/files/doc/stable/weechat_user.en.html#fifo_plugin
+[SHIELD]: https://img.shields.io/badge/download-inwee-brightgreen.svg
+[DOWNLOAD]: https://github.com/susam/uncap/releases/download/0.1.0/inwee
 
 
 Contents
@@ -14,7 +19,7 @@ Contents
     * [With wget](#with-wget)
     * [With git](#with-git)
   * [Getting Started](#getting-started)
-    * [Using from shell](#using-from-shell)
+    * [Using from Shell](#using-from-shell)
     * [Using from WeeChat](#using-from-weechat)
   * [Without InWee](#without-inwee)
   * [License](#license)
@@ -69,8 +74,8 @@ command involving sed command's output redirection.
   1. It is simpler and easier to type.
   2. It automatically prefixes every command in the input file with `*`
      (asterisk).
-  3. It automatically checks if the FIFO pipe exists in ~/.weechat
-     directory. If it does not exist, it quits with an error.
+  3. It automatically checks if the FIFO pipe exists at ~/.weechat. If
+     it does not exist, it quits with an error.
   4. It supports comments in the input file. Any line in the file where
      `#` (hash) is the first non-whitespace character is ignored as
      comment.
@@ -83,53 +88,19 @@ starting up as follows.
     weechat -r '/exec inwee settings.txt'
 
 
-Installation
-------------
-InWee is a one file script. Therefore, installing it simply requires
-downloading the file named `inwee` and copying it to some directory that
-is present in the `PATH` environment variable. In many Linux systems,
-`/usr/local/bin` or `~/bin` is a good location to copy this script.
-
-### Manual ###
-Here are the steps to manually download the script and install it.
-
-  1. Visit <https://github.com/susam/inwee>.
-  2. Click on 'Download ZIP' button.
-  3. Unzip the downloaded file and copy the file named `inwee` into a
-     directory in the `PATH` variable, e.g. /usr/local/bin or ~/bin.
-
-### With wget ###
-Here are the shell commands to automatically download the script and
-install it.
-
-    wget https://github.com/susam/inwee/archive/master.zip -O inwee.zip
-    unzip inwee.zip
-    mkdir ~/bin
-    cp inwee-master/inwee ~/bin
-
-### With git ###
-If `git` is available, then the script may be obtained by cloning this
-project.
-
-    git clone https://github.com/susam/inwee.git
-    mkdir ~/bin
-    ln -sf "$(pwd)/inwee/inwee" ~/bin
-
-This method of installation offers the benefit of obtaining updates
-easily. First get into the directory where this project was cloned. Then
-fetch the latest revision of the project.
-
-    cd inwee
-    git pull
-
-
-Getting started
+Getting Started
 ---------------
+InWee is a single-file executable script: [`inwee`][DOWNLOAD].
+
+Copy it to a directory specified in the PATH environment variable and
+make it executable: `chmod u+x vimer`. In many Linux systems,
+`/usr/local/bin` or `~/bin` is a good location to copy this script to.
+
 InWee may be invoked directly from the shell using the `inwee` command
 or from WeeChat using its `/exec` command. Several examples of both
 ways of usage are provided below.
 
-### Using from shell ###
+### Using from Shell ###
 The following list shows various ways to use InWee from the shell.
 
   1. Here is a typical example of using InWee from the shell. Say
@@ -337,18 +308,17 @@ done with InWee can also be done without it.
 
 License
 -------
-This is free software. You are permitted to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of it, under the
-terms of the MIT License. See [LICENSE.md][1] for the complete license.
+This is free and open source software. You can use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of it,
+under the terms of the MIT License. See [LICENSE.md][L] for details.
 
-This software is provided WITHOUT ANY WARRANTY; without even the implied
-warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
-[LICENSE.md][1] for the complete disclaimer.
+This software is provided "AS IS", WITHOUT WARRANTY OF ANY KIND,
+express or implied. See [LICENSE.md][L] for details.
 
-[1]: LICENSE.md
+[L]: LICENSE.md
 
 
 Contact
 -------
-To report any bugs, or suggest any improvements, please create a new
-issue at <https://github.com/susam/inwee/issues>.
+To report bugs, suggest improvements, or ask questions, please create a
+new issue at <http://github.com/susam/inwee/issues>.

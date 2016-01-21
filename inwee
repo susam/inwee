@@ -2,7 +2,7 @@
 
 # The MIT License (MIT)
 #
-# Copyright (c) 2015 Susam Pal
+# Copyright (c) 2015-2016 Susam Pal
 #
 # Permission is hereby granted, free of charge, to any person obtaining
 # a copy of this software and associated documentation files (the
@@ -26,19 +26,19 @@
 
 VERSION=0.1.0
 
-CHANGELOG="
-0.1.0 (2015-06-05)
------------------
-  - NEW: Send text or commands in file to WeeChat.
-"
+COPYRIGHT="Copyright (c) 2015-2016 Susam Pal"
 
-COPYRIGHT="Copyright (c) 2015 Susam Pal"
+LICENSE_URL="http://susam.in/licenses/mit/"
+SUPPORT_URL="https://github.com/susam/inwee/issues"
 
 NOTICE="
-This is free software. You are permitted to use, copy, modify, merge,
-publish, distribute, sublicense, and/or sell copies of it, under the
-terms of the MIT License. See <http://susam.in/licenses/mit/> for the
-complete license."
+This is free and open source software. You can use, copy, modify,
+merge, publish, distribute, sublicense, and/or sell copies of it,
+under the terms of the MIT License. You can obtain a copy of the
+MIT License at <$LICENSE_URL>.
+
+This software is provided \"AS IS\", WITHOUT WARRANTY OF ANY KIND,
+express or implied. See the MIT License for details."
 
 NAME=${0##*/}
 
@@ -46,8 +46,7 @@ NAME=${0##*/}
 # Starting point of this script.
 #
 # Arguments:
-#   "$@" -- All command line arguments specified while invoking this
-#           script must be passed to this function.
+#   arg...: All arguments this script was invoked with
 main()
 {
     parse_arguments "$@"
@@ -93,11 +92,11 @@ main()
     done
 }
 
+
 # Parse command line arguments passed to this script.
 #
 # Arguments:
-#   "$@" -- All command line arguments specified while invoking this
-#           script must be passed to this function.
+#   arg...: All arguments this script was invoked with
 #
 # Errors:
 #   If invalid arguments are specified, this function causes the script
@@ -115,10 +114,6 @@ parse_arguments()
             -d | --debug)
                 debug=yes
                 shift
-                ;;
-            -c | --changelog)
-                show_changelog
-                exit
                 ;;
             -h | --help)
                 show_help
@@ -147,7 +142,7 @@ parse_arguments()
 # Output message only in debug mode.
 #
 # Arguments:
-#   string... -- String to print to standard output stream.
+#   string...: String to print to standard output stream.
 debug_output()
 {
     if [ "$debug" = "yes" ]
@@ -160,10 +155,10 @@ debug_output()
 # Terminate the script with an error message.
 #
 # Arguments:
-#   string... -- String to print to standard error stream.
+#   string...: String to print to standard error stream.
 #
 # Errors:
-#   Unconditionally causs the script to terminate with an error message
+#   Unconditionally cause the script to terminate with an error message
 #   and exit code 1.
 quit()
 {
@@ -186,11 +181,10 @@ commands are read from standard input.
 Options:
   -b, --buffer BUFFER  Buffer to send text or command to.
   -d, --debug          Show diagnostic information.
-  -c, --changelog      Show changelog and exit.
   -h, --help           Show this help and exit.
   -v, --version        Show version and exit.
 
-Report bugs to <https://github.com/susam/inwee/issues>"
+Report bugs to <$SUPPORT_URL>."
 }
 
 
@@ -201,14 +195,5 @@ show_version()
 }
 
 
-# Show changelog.
-show_changelog()
-{
-    echo Changelog
-    echo =========
-    printf %s "$CHANGELOG"
-}
-
-
-# Start
+# Start.
 main "$@"
