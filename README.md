@@ -8,7 +8,7 @@ to WeeChat from shell or from within WeeChat via
 
 [1]: http://www.weechat.org/files/doc/stable/weechat_user.en.html#fifo_plugin
 [SHIELD]: https://img.shields.io/badge/download-inwee-brightgreen.svg
-[DOWNLOAD]: https://github.com/susam/uncap/releases/download/0.1.0/inwee
+[DOWNLOAD]: https://github.com/susam/inwee/releases/download/0.1.0/inwee
 
 
 Contents
@@ -93,7 +93,7 @@ Getting Started
 InWee is a single-file executable script: [`inwee`][DOWNLOAD].
 
 Copy it to a directory specified in the PATH environment variable and
-make it executable: `chmod u+x vimer`. In many Linux systems,
+make it executable: `chmod u+x inwee`. In many Linux systems,
 `/usr/local/bin` or `~/bin` is a good location to copy this script to.
 
 InWee may be invoked directly from the shell using the `inwee` command
