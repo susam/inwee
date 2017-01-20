@@ -60,7 +60,7 @@ main()
     fi
 
     # Find FIFO pipe via the PID method.
-    for f in ~/.weechat/weechat_fifo_*
+    for f in ~/.weechat/weechat_fifo*
     do
         if [ "$f" != ~/.weechat/weechat_fifo_"*" ]; then
             fifo="$f"
@@ -69,17 +69,6 @@ main()
             debug_output "Could not find FIFO socket via PID method."
         fi
     done
-
-    # If we still don't have the FIFO path, then we should try it with
-    # the default path for Weechat 1.7.
-    if [ -z "$fifo" ]; then
-        if [ -e "$HOME/.weechat/weechat_fifo" ]; then
-            debug_output "Found FIFO socket via Weechat 1.7 default path."
-            fifo="$HOME/.weechat/weechat_fifo"
-        else
-            debug_output "Could not find FIFO socket via Weechat 1.7 default path."
-        fi
-    fi
 
     if [ -z "$fifo" ]; then
         quit Could not find Weechat FIFO pipe.
