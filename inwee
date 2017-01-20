@@ -51,7 +51,7 @@ main()
 {
     parse_arguments "$@"
 
-    # Find FIFO path via the -fp|--fifo-path argument.
+    # Find FIFO path via the -f|--fifo argument.
     if [ -e "$fifo_path" ]; then
         debug_output "Found FIFO socket on custom argument."
         fifo="$fifo_path"
@@ -130,7 +130,7 @@ parse_arguments()
                 buffer="$2"
                 shift 2
                 ;;
-            -fp | --fifo-path)
+            -f | --fifo)
                 [ -n "$2" ] || quit \""$1"\" must be followed by a path to the FIFO socket.
                 fifo_path="$2"
                 ;;
