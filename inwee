@@ -51,18 +51,37 @@ main()
 {
     parse_arguments "$@"
 
-    # Find FIFO pipe.
+    # Find FIFO path via the -fp|--fifo-path argument.
+    if [ -e "$fifo_path" ]; then
+        debug_output "Found FIFO socket on custom argument."
+        fifo="$fifo_path"
+    else
+        debug_output "Could not find FIFO socket on custom argument."
+    fi
+
+    # Find FIFO pipe via the PID method.
     for f in ~/.weechat/weechat_fifo_*
     do
-        if [ "$f" != ~/.weechat/weechat_fifo_"*" ]
-        then
+        if [ "$f" != ~/.weechat/weechat_fifo_"*" ]; then
             fifo="$f"
             break
+        else
+            debug_output "Could not find FIFO socket via PID method."
         fi
     done
 
-    if [ -z "$fifo" ]
-    then
+    # If we still don't have the FIFO path, then we should try it with
+    # the default path for Weechat 1.7.
+    if [ -z "$fifo" ]; then
+        if [ -e "$HOME/.weechat/weechat_fifo" ]; then
+            debug_output "Found FIFO socket via Weechat 1.7 default path."
+            fifo="$HOME/.weechat/weechat_fifo"
+        else
+            debug_output "Could not find FIFO socket via Weechat 1.7 default path."
+        fi
+    fi
+
+    if [ -z "$fifo" ]; then
         quit Could not find Weechat FIFO pipe.
     fi
 
@@ -110,6 +129,10 @@ parse_arguments()
                 [ -n "$2" ] || quit \""$1"\" must be followed by buffer name.
                 buffer="$2"
                 shift 2
+                ;;
+            -fp | --fifo-path)
+                [ -n "$2" ] || quit \""$1"\" must be followed by a path to the FIFO socket.
+                fifo_path="$2"
                 ;;
             -d | --debug)
                 debug=yes
@@ -179,10 +202,11 @@ specified or if it is specified as '-', i.e. a hyphen, then text and
 commands are read from standard input.
 
 Options:
-  -b, --buffer BUFFER  Buffer to send text or command to.
-  -d, --debug          Show diagnostic information.
-  -h, --help           Show this help and exit.
-  -v, --version        Show version and exit.
+  -b, --buffer BUFFER   Buffer to send text or command to.
+  -fp, --fifo-path PATH FIFO Path to send commands to.
+  -d, --debug           Show diagnostic information.
+  -h, --help            Show this help and exit.
+  -v, --version         Show version and exit.
 
 Report bugs to <$SUPPORT_URL>."
 }
