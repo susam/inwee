@@ -167,6 +167,13 @@ The following list shows various ways to use InWee from the shell.
      are ignored. Therefore, `#` can be used to begin single line
      comments.
 
+  7. To use a custom FIFO path with Weechat.
+
+     `echo "hello world" | inwee --fifo-path "$HOME/.weechat/weechat_fifo"`
+
+     This will make inwee use a custom FIFO path to communicate with
+     Weechat.
+
 ### Using from WeeChat ###
 From WeeChat's perspective, InWee is an external command that can be
 invoked with the `inwee` command. WeeChat's `/exec` command executes
