@@ -120,8 +120,9 @@ parse_arguments()
                 shift 2
                 ;;
             -f | --fifo)
-                [ -n "$2" ] || quit \""$1"\" must be followed by a path to the FIFO socket.
+                [ -n "$2" ] || quit \""$1"\" must be followed by FIFO path.
                 fifo_path="$2"
+                shift 2
                 ;;
             -d | --debug)
                 debug=yes
