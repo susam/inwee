@@ -22,6 +22,7 @@ Contents
     * [Using from Shell](#using-from-shell)
     * [Using from WeeChat](#using-from-weechat)
   * [Without InWee](#without-inwee)
+  * [Credits](#credits)
   * [License](#license)
   * [Contact](#contact)
 
@@ -167,12 +168,12 @@ The following list shows various ways to use InWee from the shell.
      are ignored. Therefore, `#` can be used to begin single line
      comments.
 
-  7. To use a custom FIFO path with Weechat.
+  7. To use a custom FIFO path with WeeChat.
 
-     `echo "hello world" | inwee --fifo-path "$HOME/.weechat/weechat_fifo"`
+        echo "hello world" | inwee --fifo "$HOME/.weechat/weechat_fifo"
 
      This will make inwee use a custom FIFO path to communicate with
-     Weechat.
+     WeeChat.
 
 ### Using from WeeChat ###
 From WeeChat's perspective, InWee is an external command that can be
@@ -311,6 +312,13 @@ done with InWee can also be done without it.
      Without InWee: 
 
         /exec -sh sed 's/^/*/' input.txt > ~/.weechat/weechat_fifo_$(pidof weechat)
+
+
+Credits
+-------
+Thank you, [Dom Rodriguez][C1], for adding support for WeeChat 1.7.
+
+[C1]: https://github.com/shymega
 
 
 License
