@@ -8,7 +8,7 @@ to WeeChat from shell or from within WeeChat via
 
 [1]: http://www.weechat.org/files/doc/stable/weechat_user.en.html#fifo_plugin
 [SHIELD]: https://img.shields.io/badge/download-inwee-brightgreen.svg
-[DOWNLOAD]: https://github.com/susam/inwee/releases/download/0.1.0/inwee
+[DOWNLOAD]: https://github.com/susam/inwee/releases/download/0.2.0/inwee
 
 
 Contents
