@@ -51,27 +51,32 @@ main()
 {
     parse_arguments "$@"
 
-    # Find FIFO path via the -f|--fifo argument.
-    if [ -e "$fifo_path" ]; then
-        debug_output "Found FIFO socket on custom argument."
-        fifo="$fifo_path"
+    if [ -n "$fifo_path" ]
+    then
+        # Find FIFO path via the -f|--fifo argument.
+        if [ -e "$fifo_path" ]
+        then
+            debug_output Found FIFO socket on custom argument.
+            fifo="$fifo_path"
+        else
+            quit Cannot find specified FIFO path.
+        fi
     else
-        debug_output "Could not find FIFO socket on custom argument."
+        # Find FIFO pipe in ~/.weechat.
+        for f in ~/.weechat/weechat_fifo*
+        do
+            if [ "$f" != ~/.weechat/weechat_fifo"*" ]
+            then
+                debug_output Found FIFO socket in ~/.weechat.
+                fifo="$f"
+                break
+            fi
+        done
     fi
 
-    # Find FIFO pipe via the PID method.
-    for f in ~/.weechat/weechat_fifo*
-    do
-        if [ "$f" != ~/.weechat/weechat_fifo_"*" ]; then
-            fifo="$f"
-            break
-        else
-            debug_output "Could not find FIFO socket via PID method."
-        fi
-    done
-
-    if [ -z "$fifo" ]; then
-        quit Could not find Weechat FIFO pipe.
+    if [ -z "$fifo" ]
+    then
+        quit Cannot find Weechat FIFO pipe.
     fi
 
     debug_output FIFO: "$fifo"
@@ -184,7 +189,7 @@ quit()
 show_help()
 {
     printf "%s\n" \
-"Usage: $NAME [-b BUFFER] [-d] [-c] [-h] [-v] [FILE]
+"Usage: $NAME [-b BUFFER] [-f FIFO] [-d] [-c] [-h] [-v] [FILE]
 
 Read text or commands from standard input, FILE or from the output of a
 shell command, and send it to WeeChat's FIFO pipe. If FILE is not
@@ -192,11 +197,11 @@ specified or if it is specified as '-', i.e. a hyphen, then text and
 commands are read from standard input.
 
 Options:
-  -b, --buffer BUFFER   Buffer to send text or command to.
-  -fp, --fifo-path PATH FIFO Path to send commands to.
-  -d, --debug           Show diagnostic information.
-  -h, --help            Show this help and exit.
-  -v, --version         Show version and exit.
+  -b, --buffer BUFFER  Buffer to send text or command to.
+  -f, --fifo FIFO      FIFO Path to send commands to.
+  -d, --debug          Show diagnostic information.
+  -h, --help           Show this help and exit.
+  -v, --version        Show version and exit.
 
 Report bugs to <$SUPPORT_URL>."
 }
