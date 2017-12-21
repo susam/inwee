@@ -13,18 +13,18 @@ to WeeChat from shell or from within WeeChat via
 
 Contents
 --------
-  * [Necessity](#necessity)
-  * [Installation](#installation)
-    * [Manual](#manual)
-    * [With wget](#with-wget)
-    * [With git](#with-git)
-  * [Getting Started](#getting-started)
-    * [Using from Shell](#using-from-shell)
-    * [Using from WeeChat](#using-from-weechat)
-  * [Without InWee](#without-inwee)
-  * [Credits](#credits)
-  * [License](#license)
-  * [Contact](#contact)
+* [Necessity](#necessity)
+* [Installation](#installation)
+  * [Manual](#manual)
+  * [With wget](#with-wget)
+  * [With git](#with-git)
+* [Getting Started](#getting-started)
+  * [Using from Shell](#using-from-shell)
+  * [Using from WeeChat](#using-from-weechat)
+* [Without InWee](#without-inwee)
+* [Credits](#credits)
+* [License](#license)
+* [Contact](#contact)
 
 
 Necessity
@@ -59,9 +59,9 @@ because that is how WeeChat's FIFO pipe expects the input to be. Then it
 feeds the lines to WeeChat's FIFO pipe.
 
 If the above solution is good enough for you, then there is no real
-reason to use InWee. In that case, you can skip directly to the [Without
-InWee](#without-inwee) section and read about how everything that can be
-done with InWee can also be done without it.
+reason to use InWee. In that case, you can skip directly to the
+[Without InWee](#without-inwee) section and read about how everything
+that can be done with InWee can also be done without it.
 
 InWee only makes the above solution more convenient. For example, the
 commands in settings.txt can be fed to WeeChat with InWee by entering
@@ -72,14 +72,14 @@ the following command while WeeChat is running.
 This simple command offers the following advantages over the earlier
 command involving sed command's output redirection.
 
-  1. It is simpler and easier to type.
-  2. It automatically prefixes every command in the input file with `*`
-     (asterisk).
-  3. It automatically checks if the FIFO pipe exists at ~/.weechat. If
-     it does not exist, it quits with an error.
-  4. It supports comments in the input file. Any line in the file where
-     `#` (hash) is the first non-whitespace character is ignored as
-     comment.
+ 1. It is simpler and easier to type.
+ 2. It automatically prefixes every command in the input file with `*`
+    (asterisk).
+ 3. It automatically checks if the FIFO pipe exists at ~/.weechat. If
+    it does not exist, it quits with an error.
+ 4. It supports comments in the input file. Any line in the file where
+    `#` (hash) is the first non-whitespace character is ignored as
+    comment.
 
 WeeChat can execute external commands with the `/exec` command and it
 accepts the `-r` option to run commands after startup, so when WeeChat
@@ -104,76 +104,76 @@ ways of usage are provided below.
 ### Using from Shell ###
 The following list shows various ways to use InWee from the shell.
 
-  1. Here is a typical example of using InWee from the shell. Say
-     you are in a Linux support channel such as ##linux, #debian,
-     #centos, etc. and you need to share the network controller details
-     of your system with the channel while asking for help. To do this
-     with InWee, you can run the commands you need to get this
-     output and pipe it into `inwee` as shown below to send the output
-     to the current buffer in WeeChat.
+ 1. Here is a typical example of using InWee from the shell. Say
+    you are in a Linux support channel such as ##linux, #debian,
+    #centos, etc. and you need to share the network controller details
+    of your system with the channel while asking for help. To do this
+    with InWee, you can run the commands you need to get this
+    output and pipe it into `inwee` as shown below to send the output
+    to the current buffer in WeeChat.
 
         lspci | grep -i network | inwee
 
-  2. Here are some general examples of sending text or commands from
-     standard input to the current buffer in WeeChat. Any text or
-     WeeChat command you pipe into the standard input of InWee is sent
-     to WeeChat.
+ 2. Here are some general examples of sending text or commands from
+    standard input to the current buffer in WeeChat. Any text or
+    WeeChat command you pipe into the standard input of InWee is sent
+    to WeeChat.
 
         echo hello world | inwee
         echo '/join #test' | inwee
         echo /part | inwee
         echo /nick newnick | inwee
 
-     Note that comments in shell begin with `#`, therefore the WeeChat
-     `join` command in the second shell command above is quoted. Any
-     text beginning with `/` (slash), followed by a word and whitespace
-     is considered as a WeeChat command. All other text is considered as
-     text messages to be sent on chat.
+    Note that comments in shell begin with `#`, therefore the WeeChat
+    `join` command in the second shell command above is quoted. Any
+    text beginning with `/` (slash), followed by a word and whitespace
+    is considered as a WeeChat command. All other text is considered as
+    text messages to be sent on chat.
 
-  3. Multiple texts and/or commands must be separated by a newline.
+ 3. Multiple texts and/or commands must be separated by a newline.
 
         printf '/join #test\n/join #flood\n' | inwee
 
-     Every line of text or command must also end with a newline. Since
-     `printf` does not append a newline in the end like `echo` does, we
-     end the strings passed to `printf` in each command above with a
-     newline.
+    Every line of text or command must also end with a newline. Since
+    `printf` does not append a newline in the end like `echo` does, we
+    end the strings passed to `printf` in each command above with a
+    newline.
 
-     Blank lines, lines that consist only of whitespace characters and
-     lines that contain `#`, i.e. hash, as the first non-whitespace
-     character are ignored.
+    Blank lines, lines that consist only of whitespace characters and
+    lines that contain `#`, i.e. hash, as the first non-whitespace
+    character are ignored.
 
-  4. The previous example may also be conveniently written in the
-     following manner.
+ 4. The previous example may also be conveniently written in the
+    following manner.
 
         echo '/join #flood
         /join #test' | inwee
 
-  5. Text or commands may be sent to a specific WeeChat buffer with the
-     `-b` or `--buffer` option.
+ 5. Text or commands may be sent to a specific WeeChat buffer with the
+    `-b` or `--buffer` option.
 
         echo hello world | inwee -b 'irc.freenode.#test'
 
-     With the above command, the text is sent to #test channel even when
-     this channel is not in the current buffer.
+    With the above command, the text is sent to #test channel even when
+    this channel is not in the current buffer.
 
-  6. Send text or commands from a file by specifying the path to the
-     file as an argument.
+ 6. Send text or commands from a file by specifying the path to the
+    file as an argument.
 
         inwee input.txt
 
-     The file may contain one or more lines of text or commands. Blank
-     lines, lines that consist only of whitespace characters and lines
-     that contain `#`, i.e. hash, as the first non-whitespace character
-     are ignored. Therefore, `#` can be used to begin single line
-     comments.
+    The file may contain one or more lines of text or commands. Blank
+    lines, lines that consist only of whitespace characters and lines
+    that contain `#`, i.e. hash, as the first non-whitespace character
+    are ignored. Therefore, `#` can be used to begin single line
+    comments.
 
-  7. To use a custom FIFO path with WeeChat.
+ 7. To use a custom FIFO path with WeeChat.
 
         echo "hello world" | inwee --fifo "$HOME/.weechat/weechat_fifo"
 
-     This will make inwee use a custom FIFO path to communicate with
-     WeeChat.
+    This will make inwee use a custom FIFO path to communicate with
+    WeeChat.
 
 ### Using from WeeChat ###
 From WeeChat's perspective, InWee is an external command that can be
@@ -185,11 +185,11 @@ Note that unlike in the previous section where the command examples are
 meant to be run in the shell, the commands below are meant to be run
 inside WeeChat directly.
 
-  1. Send text or commands from a file to the current buffer.
+ 1. Send text or commands from a file to the current buffer.
 
         /exec inwee input.txt
 
-  2. Send text or commands from a file to #test channel.
+ 2. Send text or commands from a file to #test channel.
 
         /exec inwee -b irc.freenode.#test input.txt
 
@@ -208,108 +208,108 @@ Assuming WeeChat is currently running and there is a FIFO pipe for
 WeeChat at ~/.weechat, the list below explains how something that can be
 done with InWee can also be done without it.
 
-  1. Send the output of a shell command from shell to WeeChat.
+ 1. Send the output of a shell command from shell to WeeChat.
 
-     With InWee:
+    With InWee:
 
         lspci | grep -i network | inwee
 
-     Without InWee:
-     
-        lspci | grep -i network | sed 's/^/*/' > ~/.weechat/weechat_fifo_*  
+    Without InWee:
 
-  2. Send a message to a WeeChat channel from shell.
+        lspci | grep -i network | sed 's/^/*/' > ~/.weechat/weechat_fifo_*
 
-     With InWee:
+ 2. Send a message to a WeeChat channel from shell.
+
+    With InWee:
 
         echo hello world | inwee
 
-     Without InWee:
+    Without InWee:
 
         echo '*hello world' > ~/.weechat/weechat_fifo_*
 
-  3. Send a WeeChat command from shell to WeeChat.
+ 3. Send a WeeChat command from shell to WeeChat.
 
-     With InWee:
+    With InWee:
 
         echo /nick newnick | inwee
 
-     Without InWee:
+    Without InWee:
 
         echo */nick newnick > ~/.weechat/weechat_fifo_*
 
-  4. Send text or command to a specific WeeChat buffer from shell.
+ 4. Send text or command to a specific WeeChat buffer from shell.
 
-     With InWee:
-        
+    With InWee:
+
         echo hello world | inwee -b irc.freenode#test
 
-     Without InWee:
+    Without InWee:
 
         echo 'irc.freenode.#test *hello world' > ~/.weechat/weechat_fifo_*
 
-  5. Send text or commands in a file to WeeChat from shell.
+ 5. Send text or commands in a file to WeeChat from shell.
 
-     With InWee:
+    With InWee:
 
-        inwee input.txt 
+        inwee input.txt
 
-     Without InWee: 
+    Without InWee:
 
         sed 's/^/*/' input.txt > ~/.weechat/weechat_fifo_*
 
-  6. Send the output of a simple shell command in WeeChat to a channel.
+ 6. Send the output of a simple shell command in WeeChat to a channel.
 
-     With InWee:
+    With InWee:
 
         /exec -sh uname -a | inwee
 
-     Without InWee:
+    Without InWee:
 
-        /exec -o uname -a 
+        /exec -o uname -a
 
-     The `-sh` option is necessary in the first command to ensure that
-     the `/exec` command uses the shell to execute the specified shell
-     command. This ensures that `|` is interpreted as the pipeline
-     operator by the shell. Without the `-sh` option, the `/exec`
-     command executes the specified command itself and it would
-     interpret `|` as just another argument.
+    The `-sh` option is necessary in the first command to ensure that
+    the `/exec` command uses the shell to execute the specified shell
+    command. This ensures that `|` is interpreted as the pipeline
+    operator by the shell. Without the `-sh` option, the `/exec`
+    command executes the specified command itself and it would
+    interpret `|` as just another argument.
 
-     The `-o` command is necessary in the second command to ensure that
-     the output of the shell command is sent to the channel as chat
-     message. Without this option, the output is only printed locally
-     and not shared with the channel. There is no need of `-o` option in
-     the first command because InWee takes care of sending the output as
-     text message to the channel's buffer via WeeChat's FIFO pipe.
+    The `-o` command is necessary in the second command to ensure that
+    the output of the shell command is sent to the channel as chat
+    message. Without this option, the output is only printed locally
+    and not shared with the channel. There is no need of `-o` option in
+    the first command because InWee takes care of sending the output as
+    text message to the channel's buffer via WeeChat's FIFO pipe.
 
-  7. Send output to a specific channel in WeeChat.
+ 7. Send output to a specific channel in WeeChat.
 
-     With InWee:
+    With InWee:
 
         /exec -sh uname -a | inwee -b irc.freenode.#test
 
-     Without InWee:
+    Without InWee:
 
         /exec -sh -o -buffer irc.freenode.#test uname -a
 
-  8. Send the output of a little more complex shell command, say
-     involving pipeline operators, in WeeChat.
+ 8. Send the output of a little more complex shell command, say
+    involving pipeline operators, in WeeChat.
 
-     With InWee:
+    With InWee:
 
         /exec -sh lspci | grep -i network | inwee
 
-     Without InWee:
-     
+    Without InWee:
+
         /exec -sh -o lspci | grep -i network
 
-  9. Send text or commands in a file to the current buffer in WeeChat.
+ 9. Send text or commands in a file to the current buffer in WeeChat.
 
-     With InWee:
+    With InWee:
 
-        /exec inwee input.txt 
+        /exec inwee input.txt
 
-     Without InWee: 
+    Without InWee:
 
         /exec -sh sed 's/^/*/' input.txt > ~/.weechat/weechat_fifo_$(pidof weechat)
 
